@@ -1,0 +1,60 @@
+.delete-msgs, .delete-users {
+  cursor:pointer;
+  width:auto;
+}
+
+p.loggedin {
+  display:inline-block;
+  margin-right:10px;
+}
+
+.btn {
+  padding:5px;
+  @extend .shadow-main;
+  transition:opacity .5s ease;
+  color:$white;
+  border-radius:4px;
+  text-align:center;
+  display:inline-block;
+  height:40px;
+  &:hover {
+    opacity:.7;
+  }
+}
+
+a.btn {
+  background-color:$color-main;
+  color:$white;
+}
+.spash .btn-submit{
+  width:40px;
+}
+
+.bot .btn-submit {
+  width:100%;
+}
+
+input {
+  padding:4px;
+  font-size:14px;
+  font-weight:100;
+  font-family:$font;
+  border-radius:4px;
+  border:0;
+  width:200px;
+  height:40px;
+  @extend .shadow-main;
+}
+
+.user-input {
+  input {
+    width:100%;
+  }
+}
+
+
+//splash
+.splash {
+  width:800px;
+  margin:0 auto;
+}

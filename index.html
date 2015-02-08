@@ -4,27 +4,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <link rel="stylesheet" href="assets/css/compiled.css">
-  <link rel="stylesheet" href="assets/bower_components/css/font-awesome.css">
+  <link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.css">
   <title>Chatroom</title>
 </head>
 <body>
 
-  <div class="container">
-    <div class="chat-box">
-
-    </div>
-
-
+  <div class="splash">
+    <!---Splash div where user enters name for chatoom-->
+    <h2>choose username</h2>
+    <input type="text" placeholder = "enter yo user name here" name="loginName">
+    <a href="#" class="btn btn-submit">Submit</a>
   </div>
+
+
+  <!--The actual chat room screen-->
+  <div class="container">
+    <h1>B's ChatBox</h1>
+    <p class="delete-msgs">Delete all messages</p>
+    <p class="delete-users">Delete all users</p>
+    <p class="logged">You are logged in as <span class="logged-user"></span></p>
+    <a href="#" class="btn logout" id="logout">Logout</a>
+    <!--Top part of chat app that displays chatlog and users-->
+    <div class="top">
+      <div class="chat-box">
+        <div class="chatlog-wrapper">
+          <section class="chatlog">
+          <!---Chat messages go here-->
+          </section>
+        </div>
+      </div>
+      <div class="chat-users">
+        <div class="userlist-wrapper">
+          <section class="userlist">
+          </section>
+        </div>
+      </div>
+    </div>
+    <!--End top part of chat app that displays user and chatlog-->
+
+    <!--Bottom part of chat app for user input!-->
+    <div class="bot">
+      <div class="user-input">
+        <input type="text" placeholder="Enter your message here..." name="userMessage" id="#userMessage">
+      </div>
+      <div class="btn-wrapper">
+        <a href="" class="btn btn-submit" id="submitMessage">Send</a>
+      </div>
+    </div>
+  </div>
+  <!--END actual chat room screen-->
+
+
+
+
 
 <!--Bower components-->
 <script src="assets/bower_components/jquery/dist/jquery.js"></script>
 <script src="assets/bower_components/underscore/underscore.js"></script>
-<!--Templates-->
-<script src="assets/js/template.js"></script>
+
 <!--Data functions-->
 <script src="assets/js/data.js"></script>
+
+<!--Templates-->
+<script src="assets/js/template.js"></script>
+
 <!--main app script-->
-<script src="assets/js/main.js"></script>
+<script src="assets/js/test.js"></script>
 </body>
 </html>

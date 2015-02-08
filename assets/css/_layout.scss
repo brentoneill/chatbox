@@ -1,0 +1,48 @@
+.container {
+  width:$cbox-width + $ulist-width + 40px;
+  margin:0 auto;
+  margin-top:50px;
+  h1 {
+    text-align:center;
+  }
+}
+
+.chat-box, .chat-users {
+  display:inline-block;
+}
+
+.chat-box {
+  margin-right:10px;
+  width:$cbox-width;
+}
+
+.chatlog-wrapper {
+  padding:20px;
+  height:400px;
+  overflow-y:scroll;
+}
+.userlist-wrapper {
+
+}
+
+.chat-users {
+  background-color:$white;
+  width:$ulist-width;
+}
+
+.top {
+  margin-bottom:20px;
+}
+
+.bot {
+  .user-input {
+    width:$cbox-width;
+    margin-right:10px;
+    display:inline-block;
+    @extend .shadow-main;
+  }
+  .btn-wrapper {
+    width:$ulist-width;
+    display:inline-block;
+  }
+}

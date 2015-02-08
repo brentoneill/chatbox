@@ -1,0 +1,27 @@
+.message {
+  margin-bottom:5px;
+  background-color:$white;
+  border-radius:5px;
+  padding:8px;
+  @extend .shadow-main;
+  .user {
+    font-weight:700;
+  }
+  .time {
+    color:$color-accent;
+    font-size:10px;
+  }
+}
+
+.outgoing {
+  text-align:right;
+  .time {
+    float:left;
+  }
+}
+.incoming {
+  .time {
+    float:right;
+  }
+  background-color:$grey;
+}

@@ -1,0 +1,19 @@
+//Font import
+@import url(http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic,500italic,700italic);
+
+$font: 'Fira Sans', Arial, sans-serif;
+
+$black: #343434;
+$white: #F8F8FF;
+$grey: #f5f5f5;
+$color-main:#99E145;
+$color-accent:darken($color-main, 30%);
+
+$cbox-width:600px;
+$ulist-width:200px;
+
+.shadow-main {
+  -webkit-box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.1);
+}
