@@ -1,5 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic,500italic,700italic);
-.shadow-main, .bot .user-input, .btn, input, .message {
+.shadow-main, .bot .user-input, input, .btn, .message {
   -webkit-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1); }
@@ -41,6 +41,10 @@ body {
   height: 400px;
   overflow-y: scroll; }
 
+section.userlist {
+  overflow-y: scroll;
+  height: 400px; }
+
 .chat-users {
   background-color: #F8F8FF;
   width: 200px; }
@@ -56,13 +60,45 @@ body {
   width: 200px;
   display: inline-block; }
 
+.splash {
+  margin-top: 40vh;
+  text-align: center;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto; }
+  .splash span {
+    margin-top: 10px;
+    display: inline-block; }
+    .splash span a {
+      font-size: 12px;
+      height: auto;
+      margin-left: 10px; }
+  .splash .logged-user {
+    color: #65a51b; }
+
+.splash .btn-submit {
+  width: 80px;
+  height: 38px; }
+
+input {
+  padding: 8px;
+  padding-top: 12px;
+  font-size: 14px;
+  font-weight: 100;
+  font-family: "Fira Sans", Arial, sans-serif;
+  border-radius: 4px;
+  border: 0;
+  width: 200px;
+  height: 44px; }
+
 .delete-msgs, .delete-users {
   cursor: pointer;
   width: auto; }
 
-p.loggedin {
+p.logged {
   display: inline-block;
-  margin-right: 10px; }
+  margin-right: 10px;
+  margin-bottom: 20px; }
 
 .btn {
   padding: 5px;
@@ -70,8 +106,7 @@ p.loggedin {
   color: #F8F8FF;
   border-radius: 4px;
   text-align: center;
-  display: inline-block;
-  height: 40px; }
+  display: inline-block; }
   .btn:hover {
     opacity: .7; }
 
@@ -79,55 +114,66 @@ a.btn {
   background-color: #99E145;
   color: #F8F8FF; }
 
-.spash .btn-submit {
-  width: 40px; }
-
 .bot .btn-submit {
-  width: 100%; }
-
-input {
-  padding: 4px;
-  font-size: 14px;
-  font-weight: 100;
-  font-family: "Fira Sans", Arial, sans-serif;
-  border-radius: 4px;
-  border: 0;
-  width: 200px;
-  height: 40px; }
+  width: 100%;
+  padding: 10px; }
 
 .user-input input {
   width: 100%; }
 
-.splash {
-  width: 800px;
-  margin: 0 auto; }
+input.logged-user {
+  color: #99E145;
+  font-weight: 500;
+  font-size: 16px;
+  box-shadow: none; }
 
 .loggedin {
-  color: green; }
+  color: #343434; }
 
 .loggedout {
-  color: red; }
+  color: #e22026; }
+
+i.fa-star {
+  color: #F2D51E; }
+
+.loggedout i.fa-user {
+  color: #f19194; }
+
+.loggedin i.fa.user {
+  color: #51D4E8; }
+
+.user.me {
+  color: #99E145; }
 
 .message {
   margin-bottom: 5px;
   background-color: #F8F8FF;
   border-radius: 5px;
-  padding: 8px; }
+  padding: 14px; }
   .message .user {
     font-weight: 700; }
   .message .time {
-    color: #4a7914;
-    font-size: 10px; }
+    color: #51D4E8;
+    font-size: 12px; }
 
 .outgoing {
+  background-color: #F8F8FF;
   text-align: right; }
   .outgoing .time {
-    float: left; }
+    float: left;
+    color: #51D4E8; }
 
 .incoming {
-  background-color: #f5f5f5; }
+  background-color: #e1f6c9; }
   .incoming .time {
     float: right; }
+
+p.msg {
+  font-size: 12px;
+  font-weight: 300; }
+
+span.user {
+  font-size: 13px; }
 
 .hidden {
   display: none; }

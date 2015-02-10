@@ -9,20 +9,23 @@
 </head>
 <body>
 
-  <div class="splash">
+  <div class="container splash">
     <!---Splash div where user enters name for chatoom-->
     <h2>choose username</h2>
-    <input type="text" placeholder = "enter yo user name here" name="loginName">
+    <input type="text" placeholder = "enter your user name here" name="loginName">
     <a href="#" class="btn btn-submit">Submit</a>
+    <br />
+    <span>You are logged in as <span class="logged-user"><!--INSERT HERE--></span>    <a href="#" class="btn logout" id="logout">Logout</a>
+    </span>
   </div>
 
 
   <!--The actual chat room screen-->
-  <div class="container">
+  <div class="container chatbox hidden">
     <h1>B's ChatBox</h1>
-    <p class="delete-msgs">Delete all messages</p>
+<!--<p class="delete-msgs">Delete all messages</p>-->
     <p class="delete-users">Delete all users</p>
-    <p class="logged">You are logged in as <span class="logged-user"></span></p>
+    <p class="logged">You are logged in as <input disabled class="logged-user"></input></p>
     <a href="#" class="btn logout" id="logout">Logout</a>
     <!--Top part of chat app that displays chatlog and users-->
     <div class="top">
@@ -59,6 +62,7 @@
 
 
 <!--Bower components-->
+<script src="assets/bower_components/moment/moment.js"></script>
 <script src="assets/bower_components/jquery/dist/jquery.js"></script>
 <script src="assets/bower_components/underscore/underscore.js"></script>
 

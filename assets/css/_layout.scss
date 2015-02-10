@@ -25,6 +25,11 @@
 
 }
 
+section.userlist {
+  overflow-y:scroll;
+  height:400px;
+}
+
 .chat-users {
   background-color:$white;
   width:$ulist-width;

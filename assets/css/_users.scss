@@ -1,7 +1,22 @@
 .loggedin {
-  color:green;
+  color:$black;
 }
 
 .loggedout {
-  color:red;
+  color:$color-red;
+}
+
+i.fa-star {
+  color:$color-yellow;
+}
+.loggedout i.fa-user {
+  color:lighten($color-red,25%);
+}
+
+.loggedin i.fa.user {
+  color:$color-accent;
+}
+
+.user.me {
+  color:$color-main;
 }

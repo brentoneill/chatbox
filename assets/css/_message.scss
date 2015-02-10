@@ -2,26 +2,36 @@
   margin-bottom:5px;
   background-color:$white;
   border-radius:5px;
-  padding:8px;
+  padding:14px;
   @extend .shadow-main;
   .user {
     font-weight:700;
   }
   .time {
     color:$color-accent;
-    font-size:10px;
+    font-size:12px;
   }
 }
 
 .outgoing {
+  background-color:$white;
   text-align:right;
   .time {
     float:left;
+    color:$color-accent;
   }
 }
 .incoming {
+  background-color:lighten($color-main, 30%);
   .time {
     float:right;
   }
-  background-color:$grey;
+}
+
+p.msg {
+  font-size:12px;
+  font-weight:300;
+}
+span.user {
+  font-size:13px;
 }

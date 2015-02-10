@@ -1,0 +1,39 @@
+.splash {
+  margin-top:40vh;
+  text-align:center;
+  width:400px;
+  margin-left:auto;
+  margin-right:auto;
+  span {
+    margin-top:10px;
+    display:inline-block;
+    a {
+      font-size:12px;
+      height:auto;
+      margin-left:10px;
+    }
+  }
+  .logged-user {
+    color:darken($color-main, 20%);
+  }
+}
+
+
+.splash .btn-submit{
+  width:80px;
+  height:38px;
+}
+
+
+input {
+  padding:8px;
+  padding-top:12px;
+  font-size:14px;
+  font-weight:100;
+  font-family:$font;
+  border-radius:4px;
+  border:0;
+  width:200px;
+  height:44px;
+  @extend .shadow-main;
+}
