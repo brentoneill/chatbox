@@ -45,10 +45,11 @@ var checkUser = function(user) {
 }
 
 //Formats the date of each chat item
-var formatDate = function(date){
-  var day = moment.unix(date/1000);
+var formatDate = function(date) {
+  // var day = moment.unix(date/1000);
+  var day = moment(date);
   //86400000 is the length of a day in milliseconds
-  day = day.format('LTS')
+  day = day.format('LTS');
   // if(day.isBefore(yesterday)) {
   //   day = day.format('LTS');
   // }

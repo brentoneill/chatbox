@@ -1,3 +1,9 @@
+////
+////      _           _   _
+////  ___| |__   __ _| |_| |__   _____  __
+//// / __| '_ \ / _` | __| '_ \ / _ \ \/ /
+////| (__| | | | (_| | |_| |_) | (_) >  <
+//// \___|_| |_|\__,_|\__|_.__/ \___/_/\_\
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 ////       ChatRoom  application for the Iron Yard     ////
@@ -19,17 +25,20 @@ var cr = {
     cr.initUser();
     cr.renderUsers();
     cr.renderMessages();
-    //setInterval(cr.renderMessages, 1000);
-    //setInterval(cr.renderUsers, 2000);
-    //cr.renderUsers();
+    // setInterval(cr.renderMessages, 1000);
+    // setInterval(cr.renderUsers, 2000);
   },
 
   initUser: function(){
     if(localStorage.getItem("user")) {
-      var userObj = $.parseJSON(localStorage.user)
-      $('.logged-user').val(userObj.name);
+      var userObj = $.parseJSON(localStorage.user);
+      userObj.loggedIn = "true";
+      localStorage.user = JSON.stringify(userObj);
+      $('input.logged-user').val(userObj.name);
+      console.log("logging in " + userObj.name);
       $('.splash').addClass('hidden');
       $('.chatbox').removeClass('hidden');
+      $('.splash input').val("");
     }
     else {
       $('.splash span').text('You are not logged in. Please enter username and click submit.');
@@ -45,173 +54,142 @@ var cr = {
 
   initEvents: function() {
 
-    //Event for changing username
-    ////removes disabled from the input
+
+    ///////////////////////////////////
+    //Edit the user name shit
+    //Edit the username that is currently logged in
+    ///////////////////////////////////
     $('.logged').on('dblclick', 'input.logged-user', function(e){
       e.preventDefault();
-      $(this).removeAttr('disabled');
+      console.log('event firedd');
+      $('input.logged-user').removeAttr('disabled');
+      $('.logged').bind('keypress', function(e){
+        if(e.keyCode==13){
+          console.log('that enter key bruhs');
+        //this is where that edit shioooot goes
+        }
+      });
     });
-    // ////changes user name on enter press
-    // $('.logged').bind('keypress', function(e) {
-    //   if (e.keyCode == 13) {
-    //     console.log("enter fired");
-    //     var userObj = $.parseJSON(localStorage.user);
-    //     var userName = userObj.name;
-    //     console.log(userName);
-    //     var userId = $(".userlist .user:contains('"+ userObj.name +"')").data("userid");
-    //     console.log(userId);
-    //     $.ajax({
-    //       url:cr.config.base + '/' + userId,
-    //       type:'GET',
-    //       success:function(user){
-    //         console.log(user);
-    //         var editedUser = {
-    //           name: $('input.logged-user').val(),
-    //           loggedIn: "true",
-    //           messages: user.messages
-    //         }
-    //         userObj.name = $('input.logged-user').val();
-    //         localStorage.user = JSON.stringify(userObj)
-    //         localStorage.user._id = userId;
-    //         cr.editUser(editedUser, userId);
-    //       },
-    //       error:function(err){
-    //         console.log(err);
-    //       }
-    //     });
-    //   }
-    // });
+    ///////////////////////////////////
+    ///////////////////////////////////
 
+
+
+
+
+    ///////////////////////////////////
     //Event for sending the message
+    ///////////////////////////////////
     $('.bot').on('click', '#submitMessage', function(e){
       e.preventDefault();
-      var msgContents = $('.user-input input').val();
-      console.log(msgContents);
-      if(msgContents === "") {
-        alert("you must first enter a message...");
-      }
-      else {
-        cr.createMessage();
-      }
+      cr.createMessage();
     });
     $('.bot').bind('keypress', function(e) {
       if(e.keyCode==13){
         e.preventDefault();
-        var msgContents = $('.user-input input').val();
-        console.log(msgContents);
-        if(msgContents === "") {
-          alert("you must first enter a message...")
-        }
-        else {
-          cr.createMessage();
-        }
+        cr.createMessage();
       }
     });
+    ///////////////////////////////////
     //End sending of message
+    ///////////////////////////////////
 
 
 
-    /////////
+
+    ///////////////////////////////////
     /////////
     //Login//
     /////////
-    /////////
+    ///////////////////////////////////
     $('.splash').on('click', '.btn-submit', function(e){
       e.preventDefault();
-      if($('.splash input').val() === "") {
-        alert('you must choose a username');
+      //Checks to see if there is already a user in local storage
+      if(localStorage.getItem("user")) {
+        alert('you are already logged in');
+        cr.initUser();
+        cr.renderMessages();
       }
+      //If not user in local storage, then:
       else {
-        if(localStorage.getItem("user")) {
-          console.log("user is already logged in");
-          alert('you are already logged in');
-          cr.initUser();
-          cr.renderMessages();
-          cr.renderUser();
-        }
-        else {
-          var newUserName = $('.splash input').val();
-          var newUser = {
-            name: newUserName,
-            loggedIn: "true",
-            messages: [
-              message = {
-                user: newUserName,
-                content: "Hello World!",
-                time: Date.now()
-              }
-            ]
-          }
-          $.ajax({
-            url:cr.config.base,
-            type:'GET',
-            success: function(users){
-              //Adds a user if they are not already in the system
-              if(_.isEmpty(_.where(users, {name: newUserName}))) {
-                cr.addUser(newUser);
-                localStorage.user = JSON.stringify(newUser)
-                var userObj = $.parseJSON(localStorage.user);
-                $('input.logged-user').val(userObj.name);
-                console.log(userObj);
-                userObj.loggedIn = "true";
-                console.log(userObj.loggedIn);
-                cr.initUser();
-                cr.renderUsers();
-                cr.renderMessages();
-              }
-              //Logs you in if the username you picked is already in the system
-              else {
-                alert("There is already a " + newUserName + " in the system.\nYou have been logged in to that user name.");
-                var currentUser = _.where(users, {name: newUserName});
-                currentUser = currentUser[0];
-                localStorage.user = JSON.stringify(currentUser);
-                var userObj = $.parseJSON(localStorage.user);
-                var loggedInUser = {
-                  name: currentUser.name,
-                  loggedIn: true,
-                  messages: currentUser.messages
-                }
-                var userId = $(".userlist .user:contains('"+ currentUser.name +"')").data("userid");
-                cr.logout(userId, loggedInUser);
-                $('input.logged-user').val(userObj.name);
-                console.log(userObj);
-                userObj.loggedIn = "true";
-                console.log(userObj.loggedIn);
-                cr.initUser();
-                cr.renderUsers();
-                cr.renderMessages();
-              }
-            },
-            error:function (data){
-              console.log(err);
+        //Creates new user
+        var newUserName = $('.splash input').val();
+        var newUser = {
+          name: newUserName,
+          loggedIn: "true",
+          messages: [
+            message = {
+              user: newUserName,
+              content: "Hello World!",
+              time: new Date()
             }
-          });
-          //Resetts input, hide/shows the splash and chat screens
-          $('.splash input').val("");
-          $('div.chatbox').fadeOut(500, function(){
-            $(this).removeClass('hidden');
-            $('div.splash').addClass('hidden');
-          });
+          ]
         }
+        //AJAX REQUEST to check if user is already in system
+        $.ajax({
+          url:cr.config.base,
+          type:'GET',
+          success: function(users){
+            console.log(users);
+            //Checks to see if the user is new
+            if(_.isEmpty(_.where(users, {name: newUserName}))) {
+              cr.createUser(newUser);
+              localStorage.user = JSON.stringify(newUser)
+              cr.initUser();
+              cr.renderMessages();
+            }
+            //If the user is already in the system:
+            else {
+              alert("There is already a " + newUserName + " in the system.\nYou have been logged in to that user name.");
+              var currentUser = _.where(users, {name: newUserName});
+              currentUser = currentUser[0];
+              console.log(currentUser);
+              localStorage.user = JSON.stringify(currentUser);
+              cr.initUser();
+              cr.renderMessages();
+
+              //Logs the user in
+              var loggedInUser = {
+                name: currentUser.name,
+                loggedIn: true,
+                messages: currentUser.messages
+              }
+              var userId = $(".userlist .user:contains('"+ currentUser.name +"')").data("userid");
+              cr.logout(userId, loggedInUser);
+            }
+          },
+          error:function (data){
+            console.log(err);
+          }
+        });
+        //END OF AJAX REQUEST//
+
       }
+      cr.renderUsers();
     });
+    ///////////////////////////////////
+    ///END LOGIN//
+    ///////////////////////////////////
 
 
 
-    //////////
+
+
+    ///////////////////////////////////
     //////////
     //logout//
     //////////
-    //////////
+    ///////////////////////////////////
     $('.container').on('click', '.logout', function(e){
       e.preventDefault();
       if(localStorage.getItem("user") === null){
         alert('cant logout becuase you are not logged in');
       }
-      else if(!(localStorage.getItem("user") === null)){
-        var user = $.parseJSON(localStorage.user);
-        var userName = user.name;
-        var userId = $(".userlist .user:contains('"+ userName +"')").data("userid");
+      else {
+        console.log(localStorage.user);
+        var userObj = $.parseJSON(localStorage.user);
+        var userId = $(".userlist .user:contains('"+ userObj.name +"')").data("userid");
+
         $.ajax({
           url:cr.config.base + '/' + userId,
           type:'GET',
@@ -235,6 +213,11 @@ var cr = {
         $('.chatbox').addClass('hidden');
       }
     });
+    ///////////////////////////////////
+    //END LOGOUT
+    ///////////////////////////////////
+
+
 
     ///////////////////////////////////
     //delete all users
@@ -248,90 +231,55 @@ var cr = {
         cr.deleteUser(thisUser.data('userid'));
       }
     });
+    ///////////////////////////////////
+    //END delete all users
+    ///////////////////////////////////
   },
-  /////////////////////////////////////
-  ////        END OF EVENTS        ////
-  /////////////////////////////////////
 
 
 
 
-  /////////////////////////////////////
-  //Set the localUser -- UNDER CONSTRUCTION
-  /////////////////////////////////////
-  setLocalUser:function() {
-    //sets the local user...
-
+  countMessages:function(){
+    //counts messages to use for Message ID when creating
+    //a user creating a new message.
   },
-  /////////////////////////////////////
-  /////////////////////////////////////
 
 
 
 
-  /////////////////////////////////////
-  //User login/logout function
-  /////////////////////////////////////
-  logout: function(id, user) {
-    $.ajax({
-      url: cr.config.base + '/' + id,
-      data:user,
-      type: 'PUT',
-      success: function(data){
-        console.log(data);
-        cr.renderUsers();
-        cr.initUser();
-      },
-      error: function(err){
-        console.log(err);
-      }
-    })
-  },
-  /////////////////////////////////////
-  /////////////////////////////////////
 
-
-
-
-  /////////////////////////////////////
-  //Creates the message
-  /////////////////////////////////////
+  ///////////////////////////////////
+  //Create Message - create, send, render
+  ///////////////////////////////////
   createMessage:function() {
+    console.log('creating message');
     var user = $.parseJSON(localStorage.user);
     var userId = $(".userlist .user:contains('"+ user.name +"')").data("userid");
+    console.log(userId);
     var userName = user.name;
-    //Use ajax GET to grab all current usernames previous messages
+    console.log(userName);
     $.ajax({
       url: cr.config.base,
       type:'GET',
       success:function(data){
-        var userData = _.where(data, {name: userName}); //Finds user in the server object
-        userData = userData[0];                         //Based on local storage user name
-
-        //Count messages to set the messageID which messages
-        //Will be sorted by to avoid issues with timezones
-        var messages = [];
-        _.each(data, function(item, idx, array){
-          _.each(item.messages, function(msg, idx, array){
-            messages.push(msg);
-          });
-        });
-        var count = messages.length;
-        console.log(count);
+        userData = _.where(data, {name: userName});
+        userData = userData[0];
+        console.log(userData);
         var newMessage = {
-          user:userName,                            //Creates the actual message
-          content: $('.user-input input').val(),    //Object to be added to the
-          time: Date.now(),                         //Array of messages attached to the user
-          mid: count++
+          user:userName,
+          content: $('.user-input input').val(),
+          time:new Date()
         }
         var oldMessages = userData.messages;
-        oldMessages.push(newMessage);               //appends the new message to the array of old messages
+        oldMessages.push(newMessage);
+        console.log(oldMessages);
         var user = {
-          name: userName,         //Creates an updated user object
-          loggedIn: "true",       //That now has their latest message
-          messages: oldMessages   //Appended to the array of old messages
+          name: userName,
+          loggedIn: "true",
+          messages: oldMessages
         }
-        cr.sendMessage(userData, userId); //actually sends the message (whole user) to server
+        console.log(user);
+        cr.sendMessage(userData, userId);
         $('.user-input input').val("");
       },
       error:function(err){
@@ -339,18 +287,18 @@ var cr = {
         $('.user-input input').val("");
       }
     });
+    var messages = user.messages;
   },
-  /////////////////////////////////////
-  /////////////////////////////////////
+  ///////////////////////////////////
+  ///////////////////////////////////
 
 
 
 
-
-  /////////////////////////////////////
-  //Adds a user to the server
-  /////////////////////////////////////
-  addUser: function(user) {
+  ///////////////////////////////////
+  //creates a user by adding to database
+  ///////////////////////////////////
+  createUser: function(user) {
     $.ajax({
       url: cr.config.base,
       data:user,
@@ -363,63 +311,18 @@ var cr = {
       }
     });
   },
-  /////////////////////////////////////
-  /////////////////////////////////////
+  ///////////////////////////////////
+  ///////////////////////////////////
 
 
 
 
-  /////////////////////////////////////
-  //Delete user -- used to clear server
-  /////////////////////////////////////
-  deleteUser: function(id) {
-    $.ajax({
-      url: cr.config.base,
-      type: 'DELETE',
-      success: function(data) {
-        console.log(data);
-        cr.renderUsers();
-      },
-      error: function(err) {
-        console.log(err);
-        cr.renderUsers();
-      }
-    });
-  },
-  /////////////////////////////////////
-  /////////////////////////////////////
 
-
-
-
-  /////////////////////////////////////
-  //Edit User -- UNDER CONSTRUCTION
-  /////////////////////////////////////
-  editUser: function(user, userid){
-    $.ajax({
-      url: cr.config.base + '/' + userid,
-      type:'PUT',
-      data: user,
-      success:function(data){
-        console.log(data);
-        console.log(user);
-        console.log(userid);
-      },
-      error:function(err){
-        console.log(err);
-      }
-    });
-  },
-  /////////////////////////////////////
-  /////////////////////////////////////
-
-
-
-
-  /////////////////////////////////////
-  //Sends Message
-  /////////////////////////////////////
+  ///////////////////////////////////
+  //Send Message -- called when creating a message
+  ///////////////////////////////////
   sendMessage:function(user, userid) {
+    console.log('sending message4');
     $.ajax({
       url: cr.config.base + '/' + userid,
       data: user,
@@ -434,15 +337,39 @@ var cr = {
       }
     })
   },
-  /////////////////////////////////////
-  /////////////////////////////////////
+  ///////////////////////////////////
+  ///////////////////////////////////
 
 
 
 
-  /////////////////////////////////////
-  //Renders the list of messages
-  /////////////////////////////////////
+  ///////////////////////////////////
+  //Renders the user list
+  ///////////////////////////////////
+  renderUsers: function(){
+    $.ajax({
+      url:cr.config.base,
+      type:'GET',
+      success: function(users){
+        var compiled = _.template(templates.user);
+        var markup = "";
+        users.forEach(function(item,idx,array){
+          markup += compiled(item);
+        });
+        $('section.userlist').html(markup);
+      },
+      error:function (data){
+        console.log(err);
+      }
+    });
+  },
+  ///////////////////////////////////
+  ///////////////////////////////////
+
+
+  ///////////////////////////////////
+  //Render messages
+  ///////////////////////////////////
   renderMessages: function () {
     console.log('rendering messages!');
     $.ajax({
@@ -458,6 +385,7 @@ var cr = {
         var compiled = _.template(templates.message)
         var markup = "";
         messages = _.sortBy(messages, "time");
+        console.log(messages);
         messages.forEach(function(item,idx,array){
           markup += compiled(item);
         });
@@ -469,42 +397,58 @@ var cr = {
       }
     });
   },
-  /////////////////////////////////////
-  /////////////////////////////////////
+  ///////////////////////////////////
+  ///////////////////////////////////
 
 
 
 
-  /////////////////////////////////////
-  //Render Users function. Used at page load and set interval
-  /////////////////////////////////////
-  renderUsers: function(){
+
+  ///////////////////////////////////
+  //LogIn/Out a user
+  ///////////////////////////////////
+  logout: function(id, user) {
     $.ajax({
-      url:cr.config.base,
-      type:'GET',
-      success: function(users){
-        var compiled = _.template(templates.user);
-        var markup = "";
-        users = _.sortBy(users, "loggedIn").reverse(); //puts logged in users at top
-        users.forEach(function(item,idx,array){
-          markup += compiled(item);
-        });
-        $('section.userlist').html(markup);
+      url: cr.config.base + '/' + id,
+      data:user,
+      type: 'PUT',
+      success: function(data){
+        console.log(data);
+        cr.renderUsers();
+        cr.initUser();
       },
-      error:function (data){
+      error: function(err){
         console.log(err);
+      }
+    })
+  },
+  ///////////////////////////////////
+  ///////////////////////////////////
+
+
+
+  ///////////////////////////////////
+  //delete all users
+  ///////////////////////////////////
+  deleteUser: function(id) {
+    $.ajax({
+      url: cr.config.base,
+      type: 'DELETE',
+      success: function(data) {
+        console.log(data);
+        cr.renderUsers();
+      },
+      error: function(err) {
+        console.log(err);
+        cr.renderUsers();
       }
     });
   },
-  /////////////////////////////////////
-  /////////////////////////////////////
+  ///////////////////////////////////
+  ///////////////////////////////////
 }
 
-///////////////////////////////////////
-///////////////////////////////////////
-////    END CHAT ROOM OBJECT      /////
-///////////////////////////////////////
-///////////////////////////////////////
+
 
 
 

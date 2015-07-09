@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic,500italic,700italic);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
 .shadow-main, .bot .user-input, input, .btn, .message {
   -webkit-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
@@ -19,7 +19,7 @@ a {
     color: #343434; }
 
 body {
-  font-family: "Fira Sans", Arial, sans-serif;
+  font-family: "Ubuntu", sans-serif;
   color: #343434; }
 
 .container {
@@ -43,7 +43,8 @@ body {
 
 section.userlist {
   overflow-y: scroll;
-  height: 400px; }
+  height: 400px;
+  padding: 10px; }
 
 .chat-users {
   background-color: #F8F8FF;
@@ -85,7 +86,7 @@ input {
   padding-top: 12px;
   font-size: 14px;
   font-weight: 100;
-  font-family: "Fira Sans", Arial, sans-serif;
+  font-family: "Ubuntu", sans-serif;
   border-radius: 4px;
   border: 0;
   width: 200px;
@@ -99,6 +100,9 @@ p.logged {
   display: inline-block;
   margin-right: 10px;
   margin-bottom: 20px; }
+  p.logged input {
+    padding: 0px;
+    padding-left: 2px; }
 
 .btn {
   padding: 5px;
@@ -112,7 +116,9 @@ p.logged {
 
 a.btn {
   background-color: #99E145;
-  color: #F8F8FF; }
+  color: #F8F8FF;
+  font-size: 20px;
+  text-align: middle; }
 
 .bot .btn-submit {
   width: 100%;
@@ -128,7 +134,7 @@ input.logged-user {
   box-shadow: none; }
 
 .loggedin {
-  color: #343434; }
+  color: #51D4E8; }
 
 .loggedout {
   color: #e22026; }
@@ -151,7 +157,8 @@ i.fa-star {
   border-radius: 5px;
   padding: 14px; }
   .message .user {
-    font-weight: 700; }
+    font-weight: 700;
+    font-size: 16px; }
   .message .time {
     color: #51D4E8;
     font-size: 12px; }

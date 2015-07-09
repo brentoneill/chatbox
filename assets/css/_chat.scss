@@ -7,6 +7,10 @@ p.logged {
   display:inline-block;
   margin-right:10px;
   margin-bottom:20px;
+  input {
+    padding:0px;
+    padding-left:2px;
+  }
 }
 
 .btn {
@@ -25,6 +29,8 @@ p.logged {
 a.btn {
   background-color:$color-main;
   color:$white;
+  font-size:20px;
+  text-align:middle;
 }
 
 .bot .btn-submit {
